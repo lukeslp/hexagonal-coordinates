@@ -1,0 +1,57 @@
+{
+  "name": "hexagonal-coordinates",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Axial coordinate hexagonal grid system with distance calculations, pathfinding, rings, and SVG rendering",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "check": "tsc --noEmit",
+    "dev": "tsc --watch",
+    "prepublishOnly": "npm run build",
+    "test": "node --test dist/*.test.js"
+  },
+  "keywords": [
+    "hexagon",
+    "hex-grid",
+    "axial-coordinates",
+    "game-dev",
+    "pathfinding",
+    "tile-map",
+    "strategy-game",
+    "d3",
+    "svg",
+    "coordinates"
+  ],
+  "author": "Luke Steuber <luke@lukesteuber.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lukeslp/hexagonal-coordinates"
+  },
+  "homepage": "https://github.com/lukeslp/hexagonal-coordinates#readme",
+  "bugs": {
+    "url": "https://github.com/lukeslp/hexagonal-coordinates/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0"
+  }
+}
