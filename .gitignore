@@ -3,3 +3,15 @@ dist/
 *.tgz
 .DS_Store
 node_modules/
+
+# AI tooling cruft
+.claude/
+CLAUDE.md
+GEMINI.md
+AGENTS.md
+CRITIC.md
+ONBOARD.md
+SUGGESTIONS.md
+REPO_AUDIT.md
+*_STATUS.md
+.aider*
