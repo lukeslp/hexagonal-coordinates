@@ -17,13 +17,28 @@ Based on the excellent [Red Blob Games hexagon guide](https://www.redblobgames.c
 
 ## Installation
 
+The npm release has been unpublished; no installable registry version is
+currently available (checked September 14, 2026). Build a local package from
+source using Node.js and npm. This GitHub repository is private, so cloning
+requires an account with repository access.
+
 ```bash
-npm install hexagonal-coordinates
-# or
-pnpm add hexagonal-coordinates
-# or
-yarn add hexagonal-coordinates
+git clone https://github.com/lukeslp/hexagonal-coordinates.git
+cd hexagonal-coordinates
+npm ci
+npm run build
+npm pack
 ```
+
+From your consuming project, install the generated archive (replace the path
+with your checkout's location):
+
+```bash
+npm install /path/to/hexagonal-coordinates/hexagonal-coordinates-1.0.0.tgz
+```
+
+The imports below work with this local installation. `npm pack` creates an
+archive on your machine; it does not publish a release.
 
 ## Quick Start
 
