@@ -2,7 +2,7 @@
   "name": "hexagonal-coordinates",
   "version": "1.0.0",
   "type": "module",
-  "description": "Axial coordinate hexagonal grid system with distance calculations, pathfinding, rings, and SVG rendering",
+  "description": "Pointy-top hex grid geometry: axial coordinates, pixel conversion, neighbors, rings, straight lines, and SVG shapes",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -16,14 +16,14 @@
     "check": "tsc --noEmit",
     "dev": "tsc --watch",
     "prepublishOnly": "npm run build",
-    "test": "node --test dist/*.test.js"
+    "test": "npm run build && node --test test/*.test.mjs",
+    "prepack": "npm run build"
   },
   "keywords": [
     "hexagon",
     "hex-grid",
     "axial-coordinates",
     "game-dev",
-    "pathfinding",
     "tile-map",
     "strategy-game",
     "d3",
@@ -46,7 +46,8 @@
   "files": [
     "dist",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "src"
   ],
   "engines": {
     "node": ">=16.0.0"

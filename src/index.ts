@@ -6,7 +6,7 @@
  * - Distance calculations
  * - Neighbor finding
  * - Ring and radius queries
- * - Line-of-sight pathfinding
+ * - Straight hex lines for line-of-sight checks
  * - SVG path generation
  *
  * Uses axial coordinates (q, r) with pointy-top orientation.

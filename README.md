@@ -1,32 +1,18 @@
 # hexagonal-coordinates
 
-A complete axial coordinate hexagonal grid system for games, data visualization, and any application needing hex grids.
+Geometry for pointy-top hex grids: convert screen positions to cells, find
+neighbors, measure distance, select rings, and draw SVG hexagons. Written in
+TypeScript, with no runtime dependencies.
 
-**Zero dependencies. TypeScript-first. ~5KB minified.**
+## Install from source
 
-## Features
-
-- **Coordinate Conversion**: hex ↔ pixel transformations
-- **Distance Calculations**: step-based hex distance
-- **Neighbor Finding**: get adjacent hexes in any direction
-- **Rings & Radius**: query hexes in circular patterns
-- **Line of Sight**: pathfinding between hexes
-- **SVG Generation**: ready-to-use path data for rendering
-
-Based on the excellent [Red Blob Games hexagon guide](https://www.redblobgames.com/grids/hexagons/).
-
-## Installation
-
-The npm release has been unpublished; no installable registry version is
-currently available (checked September 14, 2026). Build a local package from
-source using Node.js and npm. This GitHub repository is private, so cloning
-requires an account with repository access.
+Use Node.js 18 or later to build and run the tests:
 
 ```bash
 git clone https://github.com/lukeslp/hexagonal-coordinates.git
 cd hexagonal-coordinates
 npm ci
-npm run build
+npm test
 npm pack
 ```
 
@@ -37,8 +23,9 @@ with your checkout's location):
 npm install /path/to/hexagonal-coordinates/hexagonal-coordinates-1.0.0.tgz
 ```
 
-The imports below work with this local installation. `npm pack` creates an
-archive on your machine; it does not publish a release.
+`npm pack` builds the library and creates an archive locally. These instructions
+use that archive; they do not require an npm registry release. The package
+provides ES modules, TypeScript declarations, and source maps.
 
 ## Quick Start
 
@@ -50,12 +37,12 @@ import {
   hexDistance,
   hexNeighbors,
   hexagonPath,
-  HexCoord,
+  type HexCoord,
 } from 'hexagonal-coordinates';
 
 // Convert hex to pixel for rendering
 const pixel = hexToPixel(2, -1);
-console.log(pixel); // { x: 207.85, y: -120 }
+console.log(pixel); // approximately { x: 207.85, y: -120 }
 
 // Convert click position to hex
 const fractional = pixelToHex(200, -100);
@@ -105,6 +92,7 @@ interface PixelCoord {
 |----------|-------------|
 | `hexToPixel(q, r, size?)` | Convert hex to pixel coordinates |
 | `pixelToHex(x, y, size?)` | Convert pixel to hex (fractional) |
+| `getHexDimensions(size?)` | Hex size, width, and height |
 | `hexRound(q, r)` | Round fractional hex to integer |
 | `hexKey(q, r)` | Create string key "q,r" |
 | `parseHexKey(key)` | Parse "q,r" back to HexCoord |
@@ -215,16 +203,33 @@ canvas.addEventListener('click', (e) => {
 });
 ```
 
-### Pathfinding
+### Checking a straight line
 
 ```typescript
-import { hexLine, hexDistance } from 'hexagonal-coordinates';
+import { hexLine, type HexCoord } from 'hexagonal-coordinates';
 
 function canSee(from: HexCoord, to: HexCoord, blocked: Set<string>): boolean {
   const line = hexLine(from, to);
   return !line.some(hex => blocked.has(`${hex.q},${hex.r}`));
 }
 ```
+
+`hexLine` samples one cell per step along a straight segment. It does not search
+around obstacles. A segment exactly on a cell boundary selects one side rather
+than every cell it touches. Use a separate visibility or pathfinding algorithm
+when those rules matter.
+
+## Input conventions
+
+Use finite integer axial coordinates for cells, integer direction indices from
+0 through 5, and nonnegative integer radii. Pixel positions may be fractional;
+hex sizes must be finite and positive. The functions assume valid inputs rather
+than validating them. `parseHexKey` expects a key produced by `hexKey`.
+
+Pixel coordinates have their origin at the center of cell `(0, 0)`, with positive
+Y downward. The click example assumes the canvas backing dimensions match its
+displayed dimensions; account for CSS scaling and any camera transform before
+converting a pointer position.
 
 ## Custom Hex Size
 
@@ -235,9 +240,21 @@ const smallPath = hexagonPath(40);  // 40px hex
 const pixel = hexToPixel(1, 0, 40); // Using 40px size
 ```
 
+## Development
+
+```bash
+npm ci
+npm run check
+npm test
+```
+
+The tests cover coordinate round trips, nearest-cell rounding, shortest-path
+distance, neighbor symmetry, ring and disk membership, contiguous lines, and SVG
+geometry. `npm test` builds first. The tests use Node's built-in test runner.
+
 ## License
 
-MIT
+[MIT](LICENSE), copyright Luke Steuber.
 
 ## Credits
 
