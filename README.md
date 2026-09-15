@@ -150,6 +150,7 @@ This library uses **axial coordinates** with **pointy-top** orientation:
 ```
 
 **Direction indices:**
+
 - 0: East (+q)
 - 1: Northeast (+q, -r)
 - 2: Northwest (-r)
@@ -251,6 +252,10 @@ npm test
 The tests cover coordinate round trips, nearest-cell rounding, shortest-path
 distance, neighbor symmetry, ring and disk membership, contiguous lines, and SVG
 geometry. `npm test` builds first. The tests use Node's built-in test runner.
+
+The build, tests, and local archive installation were verified with Node.js
+26.5.1 and TypeScript 5.9.3. Node.js 18 is the recommended minimum for the test
+runner; it was not tested in that verification pass.
 
 ## License
 
